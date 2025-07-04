@@ -7,7 +7,9 @@ webhook = Blueprint('Webhook', __name__, url_prefix='/webhook')
 
 @webhook.route('/receiver', methods=["POST"])
 def receiver():
+    print("receiver ka dwarae reciever")
     data = request.json
+    print('data===>',data)
     event_type = request.headers.get('X-Github-Event')
 
     if not event_type:
@@ -31,6 +33,7 @@ def receiver():
         }
 
         mongo.db.events.insert_one(doc)
+        print("database me save hua")
 
     elif event_type == 'pull_request':
         action_type = data['action']
@@ -66,7 +69,8 @@ def receiver():
 
 @webhook.route('/events', methods=["GET"])
 def get_events():
-    events = mongo.db.events.find().sort('timestamp',-1).limit(10)
+    print("get events kam kr rha hai")
+    events = mongo.db.events.find().sort('timestamp',-1)
     output=[]
     print("get events call hua vaha se")
     for event in events:

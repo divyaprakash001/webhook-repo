@@ -7,7 +7,7 @@ from app.webhook.routes import webhook
 def create_app():
 
     app = Flask(__name__)
-    app.config['MONGO_URI'] = 'mongodb://localhost:27017/database' 
+    app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/database' 
     
     # linking database
     init_extensions(app)
