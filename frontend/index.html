@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitHub Events Viewer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+  <header>
+
+
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="index.html" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Webhook</span>
+        </a>
+        <button data-collapse-toggle="navbar-default" type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          aria-controls="navbar-default" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+          <ul
+            class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <li>
+              <a href="index.html" id="nav-home"
+                class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-white md:p-0 dark:text-white md:dark:text-white"
+                aria-current="page">Home</a>
+            </li>
+            <li>
+              <a href="activities.html" id="nav-activities"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Activities</a>
+            </li>
+            <li>
+              <a href="push.html" id="nav-push"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Push</a>
+            </li>
+            <li>
+              <a href="pushrequest.html" id="nav-pull"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Pull
+                Request</a>
+            </li>
+            <li>
+              <a href="merge.html" id="nav-merge"
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Merged</a>
+            </li>
+
+            <li>
+              <button onclick="logout()"
+                class="block py-2 px-3 bg-gray-900 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout
+              </button>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </header>
+
+  <section>
+    <div
+      class="flex flex-1 w-full flex-col items-center justify-center text-center px-4 py-20 bg-gradient-to-b from-green-50/50 via-teal-50 to-green-50/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
+
+      <h1
+        class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-white-300 dark:text-gray-300 sm:text-7xl">
+        Automate & Visualize GitHub Activities
+        <span class="relative whitespace-nowrap text-white-600 dark:text-gray-300"> in Real-Time</span>
+        <span class="relative whitespace-nowrap text-orange-500 dark:text-orange-300">
+          <svg aria-hidden="true" viewBox="0 0 418 42"
+            class="absolute top-2/3 left-0 h-[0.58em] w-full fill-orange-500 dark:fill-orange-300/60"
+            preserveAspectRatio="none">
+            <path
+              d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.780 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.540-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.810 23.239-7.825 27.934-10.149 28.304-14.005 .417-4.348-3.529-6-16.878-7.066Z">
+            </path>
+          </svg>
+          <span class="relative">with Webhooks</span>
+        </span>
+      </h1>
+      <h2 class="mx-auto mt-12 max-w-xl text-lg sm:text-white-400 text-white-500 dark:text-gray-300 leading-7">
+        Experience the future of development automation with our intelligent GitHub Webhook system.
+        From monitoring push events to tracking pull requests and merges, our tool seamlessly captures and visualizes
+        repository activity in real-time.
+      </h2>
+      <a class="bg-orange-600 dark:bg-gray-800 rounded-xl text-white dark:text-gray-300 font-medium px-4 py-3 sm:mt-10 mt-8 hover:bg-orange-500 dark:hover:bg-gray-600 transition"
+        href="">Get started</a>
+    </div>
+  </section>
+
+
+  <section class="relative overflow-hidden ">
+    <!-- about -->
+    <div
+      class="font font-Poppins bg-gradient-to-b from-green-50/50 via-teal-50 to-green-50/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 min-h-screen">
+      <div class="flex flex-col items-center relative pt-20 overflow-hidden">
+        <!-- Animated backgroud text -->
+        <h1 class="absolute text-6xl md:text-[10rem] font-bold text-white opacity-5 animate-pulse">
+          ABOUT ME
+        </h1>
+
+        <div class="relative flex flex-col items-center mt-5 md:mt-10 group">
+          <!-- Main heading with gradient text -->
+          <h1
+            class="text-3xl md:text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-300 mb-2 transition-all duration-500 group-hover:scale-105">
+            Know Me More
+          </h1>
+
+          <!-- animated border -->
+          <div class="relative">
+            <div class="w-20 md:w-32 h-1 bg-gray-600 rounded-full overflow-hidden">
+              <div class="h-full bg-orange-600 animate-progress-bar origin-left"></div>
+            </div>
+            <div
+              class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-orange-400 rounded-full animate-ping">
+            </div>
+          </div>
+
+          <!-- Subtle decorative elements -->
+
+        </div>
+
+        <p class="mt-6 text-gray-400 text-center max-w-md md:max-w-2xl px-4 text-sm md:text-base animate-fade-in">
+          Let me introduce myself and share my journey, skills, and passions with you
+        </p>
+      </div>
+      <div class="absolute inset-0 w-full h-full -z-10">
+        <svg class="w-full h-full" viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <pattern id="dots" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(45)">
+              <circle cx="10" cy="10" r="2" fill="#3B82F6" opacity="0.1" />
+            </pattern>
+          </defs>
+          <rect width="1440" height="800" fill="url(#dots)" />
+        </svg>
+      </div>
+
+      <!-- about us image -->
+      <div class=" bg-primary text-white pt-20 pb-28 px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+        <!-- Left side: image -->
+        <div class="w-full md:w-5/12 flex justify-center h-full md:justify-end">
+          <img
+            src="https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2l0aHVifGVufDB8fDB8fHww"
+            alt="About Me" class="w-72 h-96 md:w-80 lg:w-96 object-cover rounded-lg shadow-lg" />
+        </div>
+
+        <!-- Right side: Text Content -->
+        <div class="w-full md:w-7/12 text-center md:text-left relative">
+
+
+          <!-- Main heading -->
+          <h2 class="text-3xl md:text-5xl font-bold leading-tight mb-4 pl-0">
+            A Passionate <br> Software Developer
+          </h2>
+
+          <!-- description -->
+          <p class="text-gray-300 mb-6 text-sm md:text-base leading-relaxed max-w-2xl mx-auto md:mx-0">
+            I’m Divya Prakash, a passionate Software Developer with expertise in Flask, Django, React & modern web
+            technologies. I specialize in building user-friendly applications that solve real-world problems. With a
+            deep understanding of backend development, frontend development, state management, and API integration, I
+            can bring your ideas to
+            life.
+          </p>
+
+          <!-- buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a href="https://divyaprakash.site" target="_blank"
+              class="bg-tertiary text-white font-semibold py-2 px-4 rounded-lg hover:bg-tertiary/80 text-center">
+              See Projects
+            </a>
+            <a href="https://www.linkedin.com/in/divyaprakash001/" target="_blank"
+              class="border border-tertiary text-white font-semibold py-2 px-4 rounded-lg hover:bg-tertiary/10 text-center">
+              More Details
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <section class="relative overflow-hidden">
+    <!-- about -->
+    <div
+      class="font font-Poppins bg-gradient-to-b from-green-50/50 via-teal-50 to-green-50/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 min-h-screen">
+      <div class="flex flex-col items-center relative pt-20 overflow-hidden">
+        <!-- Animated backgroud text -->
+        <h1 class="absolute text-6xl md:text-[10rem] font-bold text-white opacity-5 animate-pulse">
+          Latest Github
+        </h1>
+
+        <div class="relative flex flex-col items-center mt-5 md:mt-12 group">
+          <!-- Main heading with gradient text -->
+          <h1
+            class="text-3xl md:text-5xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-300 mb-2 transition-all duration-500 group-hover:scale-105">
+            Actions
+          </h1>
+
+          <!-- Animated border -->
+          <div class="relative">
+            <div class="w-20 md:w-32 h-1 bg-gray-600 rounded-full overflow-hidden">
+              <div class="h-full bg-orange-600 animate-progress-bar origin-left"></div>
+            </div>
+            <div
+              class="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-orange-400 rounded-full animate-ping">
+            </div>
+          </div>
+
+        </div>
+
+        <p class="mt-6 text-gray-400 text-center max-w-md md:max-w-2xl px-4 text-sm md:text-base animate-fade-in">
+          Let me introduce myself and share my journey, skills, and passions with you
+        </p>
+      </div>
+      <div class="absolute inset-0 w-full h-full -z-10">
+        <svg class="w-full h-full" viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <pattern id="dots" patternUnits="userSpaceOnUse" width="40" height="40" patternTransform="rotate(45)">
+              <circle cx="10" cy="10" r="2" fill="#3B82F6" opacity="0.1" />
+            </pattern>
+          </defs>
+          <rect width="1440" height="800" fill="url(#dots)" />
+        </svg>
+      </div>
+
+
+
+      <!-- loading events here -->
+      <div class="max-w-5xl mx-auto py-12 px-6">
+        <div id="events" class="space-y-0 w-full p-5 rounded-lg bg-transparent">
+          <p class="text-center text-gray-500">Loading events...</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+  <!-- footer section -->
+  <footer
+    class="flex flex-1 w-full flex-col items-center justify-center text-center px-4 sm:py-28 py-20 bg-gradient-to-b from-green-50/50 via-teal-50 to-green-50/50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800">
+    <a href="#" target="_blank" rel="noreferrer"
+      class="border rounded-2xl py-1 px-4 text-slate-500 text-sm mb-5 hover:scale-105 transition duration-300 ease-in-out">Inspired
+      by the github
+      <span class="font-semibold">webhook</span></a>
+    <h1 class="mx-auto max-w-4xl font-display text-5xl font-bold tracking-normal text-slate-900 sm:text-7xl">Make your
+      devops
+      <span class="relative whitespace-nowrap text-orange-400">
+        <svg aria-hidden="true" viewBox="0 0 418 42"
+          class="absolute top-2/3 left-0 h-[0.58em] w-full fill-orange-300/70" preserveAspectRatio="none">
+          <path
+            d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.78 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.54-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.81 23.239-7.825 27.934-10.149 28.304-14.005.417-4.348-3.529-6-16.878-7.066Z">
+          </path>
+        </svg>
+        <span class="relative">Easy</span>
+      </span>
+    </h1>
+    <p class="mx-auto mt-12 max-w-xl text-lg text-slate-700 leading-7 dark:text-gray-300">Track pushes, pull requests,
+      and merges in real-time with our GitHub Webhook dashboard — all in one place, hassle-free.</p>
+    <p class="mt-5 text-center text-sm leading-6 dark:text-gray-300">© 2025 Divya Prakash Hook. All rights reserved.</p>
+    <div class="mt-8 flex items-center justify-center space-x-4 text-sm font-semibold leading-6 dark:text-gray-300"><a
+        href="#">Privacy policy</a>
+      <div class="h-4 w-px bg-slate-500/20"></div><a href="#">Terms &amp; Conditions</a>
+    </div>
+  </footer>
+
+
+
+  <script src="assets/scripts/script.js"></script>
+  <script>
+    async function checkAuth() {
+      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
+        credentials: 'include'
+      });
+      // keeping it commented, so later we fix this bug
+      // if (!res.ok) {
+      //   window.location.href = 'login.html'; // redirect if not logged in
+      // }
+    }
+
+
+    async function loadEvents() {
+      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/webhook/events', {
+        credentials: 'include'
+      });
+      const data = await res.json();
+      const container = document.getElementById('events');
+      container.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'event w-full p-5 rounded-lg border border-gray-400 text-white space-y-0';
+        div.textContent = item;
+        container.appendChild(div);
+      });
+    }
+
+    async function start() {
+      await checkAuth();
+      await loadEvents();
+      setInterval(loadEvents, 15000);
+    }
+
+    start();
+
+    async function logout() {
+      await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/logout', {
+        credentials: 'include'
+      });
+      window.location.href = 'login.html';
+    }
+  </script>
+
+
+
+</body>
+
+</html>
