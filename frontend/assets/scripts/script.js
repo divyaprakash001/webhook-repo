@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleBtn = document.querySelector('[data-collapse-toggle="navbar-default"]');
+  const navMenu = document.getElementById('navbar-default');
+
+  toggleBtn.addEventListener('click', function () {
+    navMenu.classList.toggle('hidden');
+  });
+});
+
+
 function highlightActiveNav() {
   const path = window.location.pathname;
 
@@ -20,5 +30,6 @@ function highlightActiveNav() {
     }
   });
 }
+
 
 highlightActiveNav();
