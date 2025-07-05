@@ -56,7 +56,7 @@
 
 
     async function checkAuth() {
-      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
+      const res = await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
         credentials: 'include'
       });
       // if (!res.ok) {
@@ -74,7 +74,7 @@
       const password = document.getElementById('password').value;
 
       try {
-        const res = await fetch('http://localhost:5000/auth/login', {
+        const res = await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
@@ -82,6 +82,11 @@
         });
 
         if (res.ok) {
+
+          const data = await res.json();
+          console.log('====================================');
+          console.log(data);
+          console.log('====================================');
           window.location.href = 'index.html';
         } else {
           const data = await res.json();

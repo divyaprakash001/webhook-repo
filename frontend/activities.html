@@ -40,7 +40,7 @@
             </li>
             <li>
               <a href="activities.html" id="nav-activities"
-                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Activities</a>
+                class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-900 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Activities</a>
             </li>
             <li>
               <a href="push.html" id="nav-push"
@@ -159,13 +159,24 @@
   <script src="assets/scripts/script.js"></script>
   <script>
     async function checkAuth() {
-      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
-        credentials: 'include'
-      });
-      // if (!res.ok) {
-      //   window.location.href = 'login.html'; // redirect if not logged in
-      // }
+      try {
+        const res = await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
+          credentials: 'include'
+        });
+
+        if (res.status === 401) {
+          window.location.href = 'login.html';
+        }
+
+        const data = await res.json();
+        console.log('Authenticated as:', data.username);
+      } catch (error) {
+        console.error('Error checking auth:', error);
+        window.location.href = 'login.html';
+      }
     }
+
+    checkAuth();
 
 
     async function loadEvents() {

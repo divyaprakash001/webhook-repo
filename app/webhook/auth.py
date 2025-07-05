@@ -45,11 +45,9 @@ def login():
     data = request.json
     username = data.get('username')
     password = data.get('password')
-    print('data', data)
 
     # user if user already exists
     user_data = mongo.db.users.find_one({'username': username})
-    print(user_data)
 
     # checking the password and if not giving invalid response
     if not user_data or not check_password_hash(user_data['password'], password):
@@ -60,8 +58,8 @@ def login():
 
     # log the user in and create session
     login_user(user)
-
-    return jsonify({'message': 'Login successful'}), 200
+    
+    return jsonify({'message': 'Login successful','user':current_user.username}), 200
 
 
 

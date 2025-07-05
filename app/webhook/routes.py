@@ -35,7 +35,6 @@ def receiver():
         }
 
         mongo.db.events.insert_one(doc)
-        print("database me save hua")
 
     elif event_type == 'pull_request':
         action_type = data['action']
@@ -71,10 +70,8 @@ def receiver():
 
 @webhook.route('/events', methods=["GET"])
 def get_events():
-    print("get events kam kr rha hai")
     events = mongo.db.events.find().sort('timestamp',-1).limit(10)
     output=[]
-    print("get events call hua vaha se")
     for event in events:
         action = event.get('action')
         author = event.get('author')
@@ -98,10 +95,8 @@ def get_events():
 # endpoint for get push event
 @webhook.route('/events/push', methods=["GET"])
 def get_push_events():
-    print("get push events kam kr rha hai")
     events = mongo.db.events.find({'action': 'PUSH'}).sort('timestamp', -1).limit(10)
     output=[]
-    print("get push events call hua vaha se")
     for event in events:
         action = event.get('action')
         author = event.get('author')
@@ -117,10 +112,8 @@ def get_push_events():
 # endpoint for get pullrequest event
 @webhook.route('/events/pullrequest', methods=["GET"])
 def get_pull_request_events():
-    print("get push events kam kr rha hai")
     events = mongo.db.events.find({'action': 'PULL_REQUEST'}).sort('timestamp', -1).limit(10)
     output=[]
-    print("get push events call hua vaha se")
     for event in events:
         action = event.get('action')
         author = event.get('author')
@@ -136,10 +129,8 @@ def get_pull_request_events():
 # endpoint for get merge event
 @webhook.route('/events/merge', methods=["GET"])
 def get_merge_events():
-    print("get push events kam kr rha hai")
     events = mongo.db.events.find({'action': 'MERGE'}).sort('timestamp', -1).limit(10)
     output=[]
-    print("get push events call hua vaha se")
     for event in events:
         action = event.get('action')
         author = event.get('author')

@@ -6,7 +6,7 @@ mongo = PyMongo()
 def init_extensions(app):
     
   CORS(app,
-     supports_credentials=True,
-     resources={r"/*": {"origins": "http://127.0.0.1:5500"}})
+         supports_credentials=True,
+         resources={r"/*": {"origins": ["http://127.0.0.1:5500", "https://githubwebhook.vercel.app"]}})
 
   mongo.init_app(app)

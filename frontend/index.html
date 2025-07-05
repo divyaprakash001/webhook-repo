@@ -280,18 +280,28 @@
   <script src="assets/scripts/script.js"></script>
   <script>
     async function checkAuth() {
-      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
-        credentials: 'include'
-      });
-      // keeping it commented, so later we fix this bug
-      // if (!res.ok) {
-      //   window.location.href = 'login.html'; // redirect if not logged in
-      // }
+      try {
+        const res = await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/me', {
+          credentials: 'include'
+        });
+
+        if (res.status === 401) {
+          window.location.href = 'login.html';
+        }
+
+        const data = await res.json();
+        // console.log('Authenticated as:', data.username);
+      } catch (error) {
+        console.error('Error checking auth:', error);
+        window.location.href = 'login.html';
+      }
     }
+
+    checkAuth();
 
 
     async function loadEvents() {
-      const res = await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/webhook/events', {
+      const res = await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/webhook/events', {
         credentials: 'include'
       });
       const data = await res.json();
@@ -306,6 +316,7 @@
     }
 
     async function start() {
+      // also checking login at every 15 seconds
       await checkAuth();
       await loadEvents();
       setInterval(loadEvents, 15000);
@@ -314,7 +325,7 @@
     start();
 
     async function logout() {
-      await fetch(' https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/logout', {
+      await fetch('https://c2e0-2405-201-a406-c13b-e9eb-680f-548c-28d0.ngrok-free.app/auth/logout', {
         credentials: 'include'
       });
       window.location.href = 'login.html';
