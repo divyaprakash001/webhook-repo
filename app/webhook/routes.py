@@ -16,6 +16,7 @@ def receiver():
     if not event_type:
         return jsonify({'error': 'Missing GitHub Event Header'}), 400
 
+    # need modification here
     timestamp = datetime.utcnow()
 
     if event_type == 'push':
