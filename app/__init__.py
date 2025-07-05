@@ -2,13 +2,16 @@ from flask import Flask
 from flask_login import LoginManager
 from app.extensions import init_extensions, mongo
 from bson import ObjectId
-from app.webhook.auth import User  # ⚠️ make sure this doesn't cause a circular import
+from app.webhook.auth import User  
 from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
 
-    CORS(app, supports_credentials=True, origins=["http://127.0.0.1:5500"])
+    CORS(app, supports_credentials=True, origins=[
+    "http://127.0.0.1:5500",
+    "https://githubwebhook.vercel.app"
+])
     app.config['SECRET_KEY'] = 'your-secret-key'
     app.config['MONGO_URI'] = 'mongodb://127.0.0.1:27017/database'
     app.config['SESSION_COOKIE_SAMESITE'] = 'None'
